@@ -1,48 +1,50 @@
 #include<bits/stdc++.h>
 using namespace std;
-void merge(int arr[], int left, int mid, int right){
-        int i, j, k;
-        int n1= mid- left+1, n2= right-mid;
-        int larr[n1], rarr[n2];
-        for(int i=0;i<n1;i++){
-            larr[i]=arr[left+i];
+void display(int *array, int size) {
+   for(int i = 0; i<size; i++)
+      cout << array[i] << " ";
+   cout << endl;
+}
+void merge(int a[], int l , int m , int h){
+    int n1= m-l+1, n2 = h-m;
+    int larr[n1], rarr[n2];
+    for(int i=0;i<n1;i++){
+        larr[i]=a[l+i];
+    }
+    for(int i=0;i<n2;i++){
+        larr[i]=a[m+1+i];
+    }
+int    i=0, j=0 , k=1;
+    while(i<n1 && j <n2){
+        if(larr[i]<=rarr[j]){
+            a[k]=larr[i];
+            i++;
         }
-        for(int i=0;i<n2;i++){
-            rarr[i]=arr[mid+1+i];
+        else {
+            a[k]=larr[j];
         }
-        i=0 , j=0, k=left;
-        while(i<n1 && j<n2){
-            if(larr[i]<= rarr[i]){
-                arr[k]=larr[i++];
-            }
-            else {
-                arr[k]= rarr[j++];
-            }
-            k++;
-        }
-        while(i<n1){
-            arr[k++] = larr[i++];
-        }
-        while(i<n1){
-            arr[k++] = rarr[j++];
-        }
-
-
-
+        k++;
+    }
+    while(i<n1){
+        a[k]=a[i], i++, k++;
+    }
+    while(j<n2){
+        a[k]=a[j], j++, k++;
+    }
 
 
 }
-void mergesort(int arr[], int l, int r){
-        int m;
-        while(l<r){
-                m=l+(r-l)/2;
-            mergesort(arr, l ,m);
-            mergesort(arr, m+1, r);
-            merge(arr, l ,m ,r);
-        }
+void mergesort(int a[], int l , int h){
+    int m;
+    if(l<h){
+        m = l+(h-l)/2;
+        mergesort(a, l , m);
+        mergesort(a, m+1, h);
+        merge(a, l , m , h);
+    }
 }
 int main() {
-   int n;
+  int n;
    cout << "Enter the number of elements: ";
    cin >> n;
    int arr[n];     //create an array with given number of elements
@@ -51,8 +53,8 @@ int main() {
       cin >> arr[i];
    }
    cout << "Array before Sorting: ";
-   for(int i=0;i<n;i++) cout<<arr[i]<<endl;
+   display(arr, n);
    mergesort(arr, 0, n-1);     //(n-1) for last index
    cout << "Array after Sorting: ";
-   for(int i=0;i<n;i++) cout<<arr[i]<<endl;
+   display(arr, n);
 }
