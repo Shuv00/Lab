@@ -27,9 +27,7 @@ int main(){
             w-=a[i].second;
         }
         else {
-        cout << "its working" << endl;
         double vw =  (double) a[i].first/a[i].second;
-        cout << "vw" << endl;
         ans = ans + (vw * w);
         w=0;
         break;
